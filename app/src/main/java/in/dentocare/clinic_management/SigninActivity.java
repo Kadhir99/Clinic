@@ -24,15 +24,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class SigninActivity  extends AsyncTask<String,Void,String>{
 
-    TextView statusField,roleField,failed;
+    TextView failed;
     Context context;
     ConstraintLayout login;
 
-    //flag 0 means get and 1 means post.(By default it is get.)
     public SigninActivity(Context context, TextView failed) {
         this.context = context;
-        this.statusField = statusField;
-        this.roleField = roleField;
         this.failed = failed;
     }
 
@@ -42,8 +39,8 @@ public class SigninActivity  extends AsyncTask<String,Void,String>{
     protected String doInBackground(String... arg0) {
 
             try {
-                String username = (String) arg0[0];
-                String password = (String) arg0[1];
+                String username = arg0[0];
+                String password = arg0[1];
 
                 String link = "https://core-menu.000webhostapp.com/login.php";
                 String data = URLEncoder.encode("username", "UTF-8") + "=" +
@@ -63,10 +60,9 @@ public class SigninActivity  extends AsyncTask<String,Void,String>{
                 BufferedReader reader = new BufferedReader(new
                         InputStreamReader(conn.getInputStream()));
 
-                StringBuffer sb = new StringBuffer("");
-                String line = "";
+                StringBuffer sb = new StringBuffer();
+                String line;
 
-                // Read Server Response
                 while ((line = reader.readLine()) != null) {
                     sb.append(line);
                     break;
