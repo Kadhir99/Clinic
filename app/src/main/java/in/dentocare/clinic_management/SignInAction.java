@@ -88,6 +88,7 @@ public class SignInAction extends AsyncTask<String,Void,String>{
             Intent i = new Intent(context,UserInfo.class);
             i.putExtra("name",result);
             context.startActivity(i);
+            ((LoginActivity) context).overridePendingTransition(R.anim.slide_in_right,android.R.anim.slide_out_right);
         }
     }
 
