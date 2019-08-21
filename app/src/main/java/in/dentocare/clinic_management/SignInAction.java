@@ -3,29 +3,18 @@ package in.dentocare.clinic_management;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class SignInAction extends AsyncTask<String,Void,String>{
 
@@ -36,7 +25,6 @@ public class SignInAction extends AsyncTask<String,Void,String>{
         this.context = context;
         this.p = p;
     }
-
 
 
     @Override
@@ -82,7 +70,7 @@ public class SignInAction extends AsyncTask<String,Void,String>{
     protected void onPostExecute(String result){
         p.dismiss();
         if(result.equals("")){
-            buildDialog(context).show();
+            alertBox(context,"Login failed !","Please check your username and password then try again.");
             Toast.makeText(context,"Login failed", Toast.LENGTH_SHORT).show();
         }else{
             Intent i = new Intent(context,UserInfo.class);
@@ -92,10 +80,12 @@ public class SignInAction extends AsyncTask<String,Void,String>{
         }
     }
 
-    public AlertDialog.Builder buildDialog(Context c) {
+    public void alertBox(Context c,String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
-        builder.setTitle("Login failed!");
-        builder.setMessage("Please check your username and password then try again.");
-        return builder;
+        builder.setTitle(title);
+        builder.setMessage(message);
+        AlertDialog alert = builder.create();
+        alert.show();
+      //  alert.getWindow().setLayout(1000,500);
     }
 }

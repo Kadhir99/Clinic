@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -46,17 +47,22 @@ public class LoginActivity extends AppCompatActivity {
 
     private void logMeIn() {
         if(!isConnected(LoginActivity.this))
-            buildDialog(LoginActivity.this).show();
+            internetAlert(LoginActivity.this).show();
         else {
+            String username = usernameField.getText().toString();
+            String password = passwordField.getText().toString();
+            if(username.matches("") || password.matches(""))
+            {
+                alertBox(LoginActivity.this,"Empty !","Please enter your credentials").show();
+                return;
+            }
             ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
             progressDialog.setIndeterminate(true);
             progressDialog.setMessage("Authenticating...");
             progressDialog.show();
-            String username = usernameField.getText().toString();
-            String password = passwordField.getText().toString();
+            progressDialog.getWindow().setLayout(900,400);
             new SignInAction(this, progressDialog).execute(username, password);
         }
-
     }
 
     public boolean isConnected(Context context) {
@@ -76,9 +82,9 @@ public class LoginActivity extends AppCompatActivity {
             return false;
     }
 
-    public AlertDialog.Builder buildDialog(Context c) {
+    public AlertDialog.Builder internetAlert(Context c) {
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
-        builder.setTitle("No Internet!");
+        builder.setTitle("No Internet !");
         builder.setMessage("You are not connected to the internet. Please check your internet connection and try again.");
         builder.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
             @Override
@@ -90,6 +96,18 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 logMeIn();
+            }
+        });
+        return builder;
+    }
+    public AlertDialog.Builder alertBox(Context c,String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(LoginActivity.this,"Field empty", Toast.LENGTH_SHORT).show();
             }
         });
         return builder;
