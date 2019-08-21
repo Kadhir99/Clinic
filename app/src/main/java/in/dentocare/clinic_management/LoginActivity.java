@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
             String password = passwordField.getText().toString();
             if(username.matches("") || password.matches(""))
             {
-                alertBox(LoginActivity.this,"Empty !","Please enter your credentials").show();
+                alertBox(LoginActivity.this,"Empty !","\nPlease enter your credentials").show();
                 return;
             }
             ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
