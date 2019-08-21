@@ -7,6 +7,9 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import org.apache.http.HttpResponse;
@@ -21,17 +24,17 @@ import android.os.AsyncTask;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-public class SigninActivity  extends AsyncTask<String,Void,String>{
+public class SignInAction extends AsyncTask<String,Void,String>{
 
-    TextView failed;
     Context context;
-    ConstraintLayout login;
+    ProgressDialog p;
 
-    public SigninActivity(Context context, TextView failed) {
+    public SignInAction(Context context, ProgressDialog p) {
         this.context = context;
-        this.failed = failed;
+        this.p = p;
     }
 
 
@@ -77,12 +80,21 @@ public class SigninActivity  extends AsyncTask<String,Void,String>{
     }
     @Override
     protected void onPostExecute(String result){
+        p.dismiss();
         if(result.equals("")){
-            failed.setText("Login Failed");
+            buildDialog(context).show();
+            Toast.makeText(context,"Login failed", Toast.LENGTH_SHORT).show();
         }else{
             Intent i = new Intent(context,UserInfo.class);
             i.putExtra("name",result);
             context.startActivity(i);
         }
+    }
+
+    public AlertDialog.Builder buildDialog(Context c) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+        builder.setTitle("Login failed!");
+        builder.setMessage("Please check your username and password then try again.");
+        return builder;
     }
 }
