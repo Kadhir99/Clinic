@@ -14,8 +14,7 @@ public class UserInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
 
-        Intent i = getIntent();
-        String name = i.getStringExtra("name");
+        String name = getIntent().getStringExtra("name");
         nam = findViewById(R.id.name);
         nam.setText(name);
     }

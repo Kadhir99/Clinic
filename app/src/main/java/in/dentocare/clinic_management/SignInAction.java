@@ -69,11 +69,16 @@ public class SignInAction extends AsyncTask<String,Void,String>{
     @Override
     protected void onPostExecute(String result){
         p.dismiss();
-        if(result.equals("")){
+        if(result.matches("")){
             alertBox(context,"Login failed !","Please check your username and password then try again.");
             Toast.makeText(context,"Login failed", Toast.LENGTH_SHORT).show();
-        }else{
+        }else if(result.matches("admin")){
             Intent i = new Intent(context,UserInfo.class);
+            i.putExtra("name",result);
+            context.startActivity(i);
+            ((LoginActivity) context).overridePendingTransition(R.anim.slide_in_right,android.R.anim.slide_out_right);
+        }else{
+            Intent i = new Intent(context,Doctor.class);
             i.putExtra("name",result);
             context.startActivity(i);
             ((LoginActivity) context).overridePendingTransition(R.anim.slide_in_right,android.R.anim.slide_out_right);
