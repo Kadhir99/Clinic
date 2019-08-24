@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
             progressDialog.setMessage("Authenticating...");
             progressDialog.show();
             progressDialog.getWindow().setLayout(900,400);
-            new SignInAction(this, progressDialog).execute(username, password);
+            new AsyncThread(this, progressDialog,true).execute(username, password);
         }
     }
 

@@ -5,6 +5,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import android.app.AlarmManager;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -70,7 +72,7 @@ public class UserInfo extends AppCompatActivity {
 
     private Notification getNotification(String content) {
 
-        Intent intent = new Intent(this, UserInfo.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         NotificationCompat.Builder appointment = new NotificationCompat.Builder(this,"appoint")

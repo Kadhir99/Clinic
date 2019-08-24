@@ -14,4 +14,8 @@
         android:title="30 seconds"
         app:showAsAction="never" />
 
+    <item android:id="@+id/mail"
+        android:title="Send mail"
+        app:showAsAction="never" />
+
 </menu>

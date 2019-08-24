@@ -15,4 +15,5 @@
     <string name="menu_send">Send</string>
     <string name="channel_name">appointment notification</string>
     <string name="channel_description">To remind the patient about their appointment today</string>
+
 </resources>

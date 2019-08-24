@@ -1,5 +1,6 @@
 package in.dentocare.clinic_management;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -21,11 +22,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class Doctor extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView nam;
+    EditText email,time;
+    Button b;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +57,24 @@ public class Doctor extends AppCompatActivity
         String name = i.getStringExtra("name");
         nam = findViewById(R.id.textView2);
         nam.setText(name);
+
+        email=findViewById(R.id.email);
+        time=findViewById(R.id.time);
+        b=findViewById(R.id.button);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ProgressDialog progressDialog = new ProgressDialog(Doctor.this);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setMessage("Sending email...");
+                progressDialog.show();
+                progressDialog.getWindow().setLayout(900,400);
+                new AsyncThread(Doctor.this, progressDialog,false)
+                        .execute(email.getText().toString(),time.getText().toString());
+            }
+        });
+
     }
 
     @Override
