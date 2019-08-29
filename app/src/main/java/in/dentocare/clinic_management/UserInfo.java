@@ -2,28 +2,26 @@ package in.dentocare.clinic_management;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-
+import androidx.viewpager.widget.ViewPager;
 import android.app.AlarmManager;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import static android.app.Notification.EXTRA_NOTIFICATION_ID;
+import com.google.android.material.tabs.TabLayout;
+
 
 public class UserInfo extends AppCompatActivity {
+    private static final String TAG = "UserInfo";
 
+    private SectionsPageAdapter mSectionsPageAdapter;
+    private ViewPager mViewPager;
     TextView nam;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +31,22 @@ public class UserInfo extends AppCompatActivity {
         String name = getIntent().getStringExtra("name");
         nam = findViewById(R.id.name);
         nam.setText(name);
-    }
 
+        mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
+
+        mViewPager = (ViewPager) findViewById(R.id.container);
+        setupViewPager(mViewPager);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
+    }
+    private void setupViewPager(ViewPager viewPager){
+        SectionsPageAdapter adapter = new SectionsPageAdapter(this.getSupportFragmentManager());
+        adapter.addfragment(new Fragment1(), "History");
+        adapter.addfragment(new Fragment2(), "Info");
+        adapter.addfragment(new Fragment3(), "Book");
+        viewPager.setAdapter(adapter);
+    }
 
     @Override
 
