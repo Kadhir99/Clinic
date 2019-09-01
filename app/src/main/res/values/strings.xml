@@ -16,4 +16,13 @@
     <string name="channel_name">appointment notification</string>
     <string name="channel_description">To remind the patient about their appointment today</string>
 
+    <string-array name="planets_array">
+        <item>Select time slot</item>
+        <item>6:00 PM</item>
+        <item>6:30 PM</item>
+        <item>7:00 PM</item>
+        <item>7:30 PM</item>
+        <item>8:00 PM</item>
+    </string-array>
+
 </resources>
