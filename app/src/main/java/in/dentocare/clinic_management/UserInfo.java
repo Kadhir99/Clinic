@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.viewpager.widget.ViewPager;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -19,25 +21,50 @@ import com.google.android.material.tabs.TabLayout;
 
 public class UserInfo extends AppCompatActivity {
     private static final String TAG = "UserInfo";
+    public AlertDialog.Builder alertbox(Context c){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to exit ?  You will be logged off from your account");
+        builder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                UserInfo.super.onBackPressed();
+            }
+        });
+        builder.setNegativeButton("no", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+        return builder;
+
+    }
+
 
     private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
-    TextView nam;
+    static String name;
+
+    @Override
+    public void onBackPressed() {
+        if(mViewPager.getCurrentItem()>0){
+            mViewPager.setCurrentItem(0,true);
+        }else if(mViewPager.getCurrentItem()==0){
+                alertbox(UserInfo.this).show();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
 
-        String name = getIntent().getStringExtra("name");
-        nam = findViewById(R.id.name);
-        nam.setText(name);
-
+        name = getIntent().getStringExtra("name");
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager =  findViewById(R.id.container);
         setupViewPager(mViewPager);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout =  findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
     }
     private void setupViewPager(ViewPager viewPager){
@@ -97,4 +124,8 @@ public class UserInfo extends AppCompatActivity {
                 .setAutoCancel(true);
         return appointment.build();
     }
+    public static String sendData(){
+        return name;
+    }
+
 }
