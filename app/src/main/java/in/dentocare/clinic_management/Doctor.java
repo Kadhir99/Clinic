@@ -59,7 +59,7 @@ public class Doctor extends AppCompatActivity
         nam.setText(name);
 
         email=findViewById(R.id.email);
-        time=findViewById(R.id.time);
+        time=findViewById(R.id.Time);
         b=findViewById(R.id.button);
         b.setOnClickListener(new View.OnClickListener() {
             @Override

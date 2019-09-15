@@ -21,6 +21,7 @@ import com.google.android.material.tabs.TabLayout;
 
 public class UserInfo extends AppCompatActivity {
     private static final String TAG = "UserInfo";
+
     public AlertDialog.Builder alertbox(Context c){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to exit ?  You will be logged off from your account");
@@ -42,7 +43,7 @@ public class UserInfo extends AppCompatActivity {
 
     private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
-    static String name;
+    static String name,datestr,timestr;
 
     @Override
     public void onBackPressed() {
@@ -66,6 +67,8 @@ public class UserInfo extends AppCompatActivity {
 
         TabLayout tabLayout =  findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+
     }
     private void setupViewPager(ViewPager viewPager){
         SectionsPageAdapter adapter = new SectionsPageAdapter(this.getSupportFragmentManager());
@@ -123,9 +126,6 @@ public class UserInfo extends AppCompatActivity {
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
         return appointment.build();
-    }
-    public static String sendData(){
-        return name;
     }
 
 }

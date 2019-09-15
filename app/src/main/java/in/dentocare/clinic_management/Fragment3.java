@@ -1,6 +1,8 @@
 package in.dentocare.clinic_management;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -22,12 +25,14 @@ import java.util.Calendar;
 public class Fragment3 extends Fragment {
 
     private DatePickerDialog.OnDateSetListener DatePicker;
+    Button btn;
     EditText mdate;
+    String date,time;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment3,container,false);
-        Spinner spinner = view.findViewById(R.id.spinner);
+        final Spinner spinner = view.findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(), R.array.time_slot, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -53,6 +58,20 @@ public class Fragment3 extends Fragment {
                 mdate.setText(date);
             }
         };
+        btn = view.findViewById(R.id.book);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                 date = mdate.getText().toString();
+                 time = spinner.getSelectedItem().toString();
+
+                UserInfo.datestr = date;
+                UserInfo.timestr = time;
+
+            }
+        });
         return view;
     }
+
+
 }
