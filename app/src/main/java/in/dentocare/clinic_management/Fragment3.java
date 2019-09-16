@@ -1,8 +1,11 @@
 package in.dentocare.clinic_management;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -68,9 +71,29 @@ public class Fragment3 extends Fragment {
 
                 UserInfo.datestr = date;
                 UserInfo.timestr = time;
-                new AsyncMailer(getActivity()).execute("kadhirl19@gmail.com",date+" at "+time);
+
+                final View dialogView = getLayoutInflater().inflate(R.layout.email_input_temp,null);
+                AlertDialog.Builder input = new AlertDialog.Builder(getContext())
+                        .setView(dialogView)
+                        .setCancelable(false)
+                        .setPositiveButton("Send", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        EditText em = dialogView.findViewById(R.id.email);
+                        String email = em.getText().toString();
+                        new AsyncMailer(getActivity()).execute(email,date+" at "+time);
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                AlertDialog em = input.create();
+                em.show();
             }
         });
+
         return view;
     }
 
