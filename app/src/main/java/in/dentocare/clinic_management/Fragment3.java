@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,7 +68,7 @@ public class Fragment3 extends Fragment {
 
                 UserInfo.datestr = date;
                 UserInfo.timestr = time;
-
+                new AsyncMailer(getActivity()).execute("kadhirl19@gmail.com",date+" at "+time);
             }
         });
         return view;

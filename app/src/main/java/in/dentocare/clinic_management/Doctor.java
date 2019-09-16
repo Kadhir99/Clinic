@@ -20,6 +20,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
 import android.widget.Button;
@@ -53,28 +54,6 @@ public class Doctor extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-        Intent i = getIntent();
-        String name = i.getStringExtra("name");
-        nam = findViewById(R.id.textView2);
-        nam.setText(name);
-
-        email=findViewById(R.id.email);
-        time=findViewById(R.id.Time);
-        b=findViewById(R.id.button);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                ProgressDialog progressDialog = new ProgressDialog(Doctor.this);
-                progressDialog.setIndeterminate(true);
-                progressDialog.setMessage("Sending email...");
-                progressDialog.show();
-                progressDialog.getWindow().setLayout(900,400);
-                new AsyncThread(Doctor.this, progressDialog,false)
-                        .execute(email.getText().toString(),time.getText().toString());
-            }
-        });
-
     }
 
     @Override
@@ -117,8 +96,13 @@ public class Doctor extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
+            FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+            t.remove(getSupportFragmentManager().findFragmentByTag("frag2"));
+            t.commit();
+        } else if (id == R.id.nav_signup) {
+            FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+            t.add(R.id.doctor_container,new Fragment2(),"frag2");
+            t.commit();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_tools) {

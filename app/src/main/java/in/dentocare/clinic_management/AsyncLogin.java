@@ -16,40 +16,26 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
-public class AsyncThread extends AsyncTask<String,Void,String>{
+public class AsyncLogin extends AsyncTask<String,Void,String>{
 
     Context context;
     ProgressDialog p;
-    Boolean flag;
-    String link,lable1,lable2;
 
-    public AsyncThread(Context context, ProgressDialog p, Boolean f) {
+    public AsyncLogin(Context context, ProgressDialog p) {
         this.context = context;
         this.p = p;
-        this.flag=f;
     }
 
 
     @Override
     protected String doInBackground(String... arg) {
-        if(flag==true) {
-            link = "https://core-menu.000webhostapp.com/login.php";
-            lable1="username";
-            lable2="password";
-        }
-        else {
-            link = "https://core-menu.000webhostapp.com/mail/mail.php";
-            lable1="email";
-            lable2="time";
-        }
-
             try {
-                String data = URLEncoder.encode(lable1, "UTF-8") + "=" +
+                String data = URLEncoder.encode("username", "UTF-8") + "=" +
                         URLEncoder.encode(arg[0], "UTF-8");
-                data += "&" + URLEncoder.encode(lable2, "UTF-8") + "=" +
+                data += "&" + URLEncoder.encode("password", "UTF-8") + "=" +
                         URLEncoder.encode(arg[1], "UTF-8");
 
-                URL url = new URL(link);
+                URL url = new URL("https://core-menu.000webhostapp.com/login.php");
                 URLConnection conn = url.openConnection();
 
                 conn.setDoOutput(true);
@@ -91,10 +77,6 @@ public class AsyncThread extends AsyncTask<String,Void,String>{
             i.putExtra("name",result);
             context.startActivity(i);
             ((LoginActivity) context).overridePendingTransition(R.anim.slide_in_right,android.R.anim.slide_out_right);
-        }
-        else if(result.matches("Message sent!"))
-        {
-            Toast.makeText(context,result, Toast.LENGTH_SHORT).show();
         }
         else if(result.matches("exception"))
         {
