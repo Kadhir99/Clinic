@@ -23,7 +23,6 @@ public class Fragment1 extends Fragment {
         settime = view.findViewById(R.id.Time);
         setdate.setText(UserInfo.datestr);
         settime.setText(UserInfo.timestr);
-
         return view;
     }
 

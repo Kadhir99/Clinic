@@ -22,7 +22,7 @@ import com.google.android.material.tabs.TabLayout;
 public class UserInfo extends AppCompatActivity {
     private static final String TAG = "UserInfo";
 
-    public AlertDialog.Builder alertbox(Context c){
+    public AlertDialog.Builder alertBox(Context c){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to exit ?  You will be logged off from your account");
         builder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
@@ -50,7 +50,7 @@ public class UserInfo extends AppCompatActivity {
         if(mViewPager.getCurrentItem()>0){
             mViewPager.setCurrentItem(0,true);
         }else if(mViewPager.getCurrentItem()==0){
-                alertbox(UserInfo.this).show();
+                alertBox(UserInfo.this).show();
         }
     }
 

@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -55,12 +56,17 @@ public class LoginActivity extends AppCompatActivity {
                 alertBox(LoginActivity.this,"Empty !","\nPlease enter your credentials").show();
                 return;
             }
-            ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
-            progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Authenticating...");
-            progressDialog.show();
-            progressDialog.getWindow().setLayout(900,400);
-            new AsyncLogin(this, progressDialog).execute(username, password);
+//            ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
+//            progressDialog.setIndeterminate(true);
+//            progressDialog.setMessage("Authenticating...");
+//            progressDialog.show();
+//            progressDialog.getWindow().setLayout(900,400);
+            Intent intent = new Intent(this,LoginService.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("username",username);
+            bundle.putString("password",password);
+            intent.putExtras(bundle);
+//            new AsyncLogin(this, progressDialog).execute(username, password);
         }
     }
 
