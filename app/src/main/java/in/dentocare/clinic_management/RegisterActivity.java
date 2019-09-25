@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,34 +25,25 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LoginActivity extends AppCompatActivity {
-
-    EditText usernameField,passwordField;
-    ConstraintLayout login;
+public class RegisterActivity extends AppCompatActivity {
+    EditText user,pass;
+    Button register;
+    ConstraintLayout reg;
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        usernameField = findViewById(R.id.editText1);
-        passwordField = findViewById(R.id.editText2);
-        login= findViewById(R.id.loginform);
-        mAuth = FirebaseAuth.getInstance();
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser User = mAuth.getCurrentUser();
-        if(User!=null&&isConnected(LoginActivity.this)) {
-            String user = User.getEmail();
-            Intent i = new Intent(LoginActivity.this, UserInfo.class);
-            i.putExtra("name", user);
-            startActivity(i);
-            (LoginActivity.this).overridePendingTransition(R.anim.slide_in_right, android.R.anim.slide_out_right);
-        }
-    }
+        setContentView(R.layout.activity_register);
 
+        user= findViewById(R.id.editText1);
+        pass = findViewById(R.id.editText2);
+        register = findViewById(R.id.register);
+        reg=findViewById(R.id.registerform);
+        mAuth = FirebaseAuth.getInstance();
+
+
+    }
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         View view = activity.getCurrentFocus();
@@ -61,36 +53,27 @@ public class LoginActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public void register(View view){
-        hideKeyboard(LoginActivity.this);
-        Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
-        startActivity(intent);
-
+    public void register(View view) {
+        hideKeyboard(RegisterActivity.this);
+        registeruser();
     }
-
-    public void login(View view){
-        hideKeyboard(LoginActivity.this);
-        logMeIn();
-    }
-
-    private void logMeIn() {
-        if(!isConnected(LoginActivity.this))
-            internetAlert(LoginActivity.this).show();
-        else {
-            String username = usernameField.getText().toString();
-            String password = passwordField.getText().toString();
+    private void registeruser() {
+        if(!isConnected(RegisterActivity.this))
+            internetAlert(RegisterActivity.this).show();
+        else{
+            String username = user.getText().toString();
+            String password = pass.getText().toString();
             if(username.matches("") || password.matches(""))
             {
-                alertBox(LoginActivity.this,"Empty !","\nPlease enter your credentials").show();
+                alertBox(RegisterActivity.this,"Empty !","\nPlease enter your credentials").show();
                 return;
             }
-            final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
+            final ProgressDialog progressDialog = new ProgressDialog(RegisterActivity.this);
             progressDialog.setIndeterminate(true);
             progressDialog.setMessage("Authenticating...");
             progressDialog.show();
             progressDialog.getWindow().setLayout(900,400);
-
-            mAuth.signInWithEmailAndPassword(username, password)
+            mAuth.createUserWithEmailAndPassword(username, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete( Task<AuthResult> task) {
@@ -98,13 +81,13 @@ public class LoginActivity extends AppCompatActivity {
                                 progressDialog.dismiss();
                                 // Sign in success, update UI with the signed-in user's information
                                 String user = mAuth.getCurrentUser().getEmail();
-                                Intent i = new Intent(LoginActivity.this,UserInfo.class);
+                                Intent i = new Intent(RegisterActivity.this,UserInfo.class);
                                 i.putExtra("name",user);
                                 startActivity(i);
-                                (LoginActivity.this).overridePendingTransition(R.anim.slide_in_right,android.R.anim.slide_out_right);
+                                (RegisterActivity.this).overridePendingTransition(R.anim.slide_in_right,android.R.anim.slide_out_right);
                             } else {
                                 // If sign in fails, display a message to the user.
-                                Toast.makeText(LoginActivity.this, "login failed.",
+                                Toast.makeText(RegisterActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
                                 progressDialog.dismiss();
                             }
@@ -115,7 +98,6 @@ public class LoginActivity extends AppCompatActivity {
             //new AsyncLogin(this, progressDialog).execute(username, password);
         }
     }
-
     public boolean isConnected(Context context) {
 
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -146,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
         builder.setPositiveButton("Try again", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                logMeIn();
+                registeruser();
             }
         });
         return builder;
@@ -158,12 +140,9 @@ public class LoginActivity extends AppCompatActivity {
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(LoginActivity.this,"Field empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this,"Field empty", Toast.LENGTH_SHORT).show();
             }
         });
         return builder;
     }
-
-
 }
-

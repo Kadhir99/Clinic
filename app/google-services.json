@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "65149773976",
+    "firebase_url": "https://clinic-management-cff93.firebaseio.com",
+    "project_id": "clinic-management-cff93",
+    "storage_bucket": "clinic-management-cff93.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:65149773976:android:4621701fd88c3bc06e48ed",
+        "android_client_info": {
+          "package_name": "in.dentocare.clinic_management"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "65149773976-pjvm3u681mljfp3e4ke38aim6ga4ub94.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.dentocare.clinic_management",
+            "certificate_hash": "52503ba2102e5fe732be0113df8b7f9b020d1c99"
+          }
+        },
+        {
+          "client_id": "65149773976-s5gbmhmg44vn5ti1i3o5ltt2obblh8o3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD16M0MOAbOXSpyQl7U2AsNSECxZoQhkfY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "65149773976-s5gbmhmg44vn5ti1i3o5ltt2obblh8o3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

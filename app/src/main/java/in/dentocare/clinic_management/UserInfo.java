@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class UserInfo extends AppCompatActivity {
@@ -28,7 +29,9 @@ public class UserInfo extends AppCompatActivity {
         builder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                UserInfo.super.onBackPressed();
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(UserInfo.this,LoginActivity.class);
+                startActivity(intent);
             }
         });
         builder.setNegativeButton("no", new DialogInterface.OnClickListener() {

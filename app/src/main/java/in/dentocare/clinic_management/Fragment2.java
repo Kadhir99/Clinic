@@ -19,8 +19,9 @@ public class Fragment2 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment2,container,false);
         n = UserInfo.name;
-        TextView info = view.findViewById(R.id.userinfo);
-        info.setText(n);
+        //TextView info = view.findViewById(R.id.userinfo);
+        TextView email = view.findViewById(R.id.email);
+        email.setText(n);
         return view;
     }
 
