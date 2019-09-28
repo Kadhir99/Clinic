@@ -74,7 +74,7 @@ public class AsyncLogin extends AsyncTask<String,Void,String>{
         else if(result.matches("admin"))
         {
             Intent i = new Intent(context,Doctor.class);
-            i.putExtra("name",result);
+            i.putExtra("emailStr",result);
             context.startActivity(i);
             ((LoginActivity) context).overridePendingTransition(R.anim.slide_in_right,android.R.anim.slide_out_right);
         }
@@ -84,7 +84,7 @@ public class AsyncLogin extends AsyncTask<String,Void,String>{
         }
         else {
             Intent i = new Intent(context,UserInfo.class);
-            i.putExtra("name",result);
+            i.putExtra("emailStr",result);
             context.startActivity(i);
             ((LoginActivity) context).overridePendingTransition(R.anim.slide_in_right,android.R.anim.slide_out_right);
         }

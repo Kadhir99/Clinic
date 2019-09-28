@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,7 +45,7 @@ public class UserInfo extends AppCompatActivity {
 
     private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
-    static String name,datestr,timestr;
+    static String emailStr, dateStr, timeStr;
 
     @Override
     public void onBackPressed() {
@@ -62,7 +61,7 @@ public class UserInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
 
-        name = getIntent().getStringExtra("name");
+        emailStr = getIntent().getStringExtra("emailStr");
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 
         mViewPager =  findViewById(R.id.container);

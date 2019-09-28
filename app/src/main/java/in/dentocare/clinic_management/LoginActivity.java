@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -33,8 +32,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        usernameField = findViewById(R.id.editText1);
-        passwordField = findViewById(R.id.editText2);
+        usernameField = findViewById(R.id.email);
+        passwordField = findViewById(R.id.password);
         login= findViewById(R.id.loginform);
         mAuth = FirebaseAuth.getInstance();
     }
@@ -46,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         if(User!=null&&isConnected(LoginActivity.this)) {
             String user = User.getEmail();
             Intent i = new Intent(LoginActivity.this, UserInfo.class);
-            i.putExtra("name", user);
+            i.putExtra("emailStr", user);
             startActivity(i);
             (LoginActivity.this).overridePendingTransition(R.anim.slide_in_right, android.R.anim.slide_out_right);
         }
@@ -87,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
             final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
             progressDialog.setIndeterminate(true);
             progressDialog.setMessage("Authenticating...");
+            progressDialog.setCancelable(false);
             progressDialog.show();
             progressDialog.getWindow().setLayout(900,400);
 
@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 String user = mAuth.getCurrentUser().getEmail();
                                 Intent i = new Intent(LoginActivity.this,UserInfo.class);
-                                i.putExtra("name",user);
+                                i.putExtra("emailStr",user);
                                 startActivity(i);
                                 (LoginActivity.this).overridePendingTransition(R.anim.slide_in_right,android.R.anim.slide_out_right);
                             } else {

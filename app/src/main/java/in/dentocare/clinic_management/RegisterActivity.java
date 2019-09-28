@@ -4,7 +4,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,9 +11,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,7 +20,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText user,pass;
@@ -36,28 +32,19 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        user= findViewById(R.id.editText1);
-        pass = findViewById(R.id.editText2);
+        user= findViewById(R.id.email);
+        pass = findViewById(R.id.password);
         register = findViewById(R.id.register);
-        reg=findViewById(R.id.registerform);
+        reg=findViewById(R.id.registerForm);
         mAuth = FirebaseAuth.getInstance();
 
 
     }
-    public static void hideKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        View view = activity.getCurrentFocus();
-        if (view == null) {
-            view = new View(activity);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
 
     public void register(View view) {
-        hideKeyboard(RegisterActivity.this);
-        registeruser();
+        registerUser();
     }
-    private void registeruser() {
+    private void registerUser() {
         if(!isConnected(RegisterActivity.this))
             internetAlert(RegisterActivity.this).show();
         else{
@@ -82,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 String user = mAuth.getCurrentUser().getEmail();
                                 Intent i = new Intent(RegisterActivity.this,UserInfo.class);
-                                i.putExtra("name",user);
+                                i.putExtra("emailStr",user);
                                 startActivity(i);
                                 (RegisterActivity.this).overridePendingTransition(R.anim.slide_in_right,android.R.anim.slide_out_right);
                             } else {
@@ -95,7 +82,6 @@ public class RegisterActivity extends AppCompatActivity {
                             // ...
                         }
                     });
-            //new AsyncLogin(this, progressDialog).execute(username, password);
         }
     }
     public boolean isConnected(Context context) {
@@ -128,7 +114,7 @@ public class RegisterActivity extends AppCompatActivity {
         builder.setPositiveButton("Try again", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                registeruser();
+                registerUser();
             }
         });
         return builder;

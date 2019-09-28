@@ -10,8 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import java.util.zip.Inflater;
-
 public class Fragment1 extends Fragment {
     TextView setdate,settime;
     @Nullable
@@ -21,8 +19,8 @@ public class Fragment1 extends Fragment {
 
         setdate = view.findViewById(R.id.date);
         settime = view.findViewById(R.id.Time);
-        setdate.setText(UserInfo.datestr);
-        settime.setText(UserInfo.timestr);
+        setdate.setText(UserInfo.dateStr);
+        settime.setText(UserInfo.timeStr);
         return view;
     }
 
