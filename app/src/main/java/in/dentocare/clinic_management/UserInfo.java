@@ -29,8 +29,9 @@ public class UserInfo extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(UserInfo.this,LoginActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(UserInfo.this,LoginActivity.class);
+//                startActivity(intent);
+                finish();
             }
         });
         builder.setNegativeButton("no", new DialogInterface.OnClickListener() {

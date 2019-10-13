@@ -6,6 +6,7 @@ import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.concurrent.Executor;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -16,10 +17,17 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class AsyncLogin extends AsyncTask<String,Void,String>{
 
     Context context;
     ProgressDialog p;
+    //static String usr;
 
     public AsyncLogin(Context context, ProgressDialog p) {
         this.context = context;
@@ -61,7 +69,26 @@ public class AsyncLogin extends AsyncTask<String,Void,String>{
                 Toast.makeText(context,"Login failed", Toast.LENGTH_SHORT).show();
                 return "exception";
             }
-
+//       final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+//        mAuth.createUserWithEmailAndPassword(arg[0], arg[1])
+//                .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete( Task<AuthResult> task) {
+//                        if (task.isSuccessful()) {
+//                            FirebaseUser User = mAuth.getCurrentUser();
+//                            // Sign in success, update UI with the signed-in user's information
+//                            usr=User.getEmail();
+//
+//                        } else {
+//                            // If sign in fails, display a message to the user.
+//                            Toast.makeText(context,"Authentication failed",Toast.LENGTH_LONG).show();
+//                            p.dismiss();
+//                        }
+//
+//                        // ...
+//                    }
+//                });
+//    return usr;
     }
     @Override
     protected void onPostExecute(String result){

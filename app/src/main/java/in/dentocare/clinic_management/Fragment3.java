@@ -1,26 +1,41 @@
 package in.dentocare.clinic_management;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
 public class Fragment3 extends Fragment {
 
     Button btn;
-    EditText mDate;
+    EditText mdate;
     String date,time;
+    DatabaseReference appointbase = FirebaseDatabase.getInstance().getReference("users");
+    String appointment;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -29,8 +44,9 @@ public class Fragment3 extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(), R.array.time_slot, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        mDate = view.findViewById(R.id.Date);
-        mDate.setOnClickListener(new View.OnClickListener() {
+        //final DatePickerDialog.OnDateSetListener mDatePicker;
+        mdate = view.findViewById(R.id.Date);
+        mdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar c = Calendar.getInstance();
@@ -41,23 +57,29 @@ public class Fragment3 extends Fragment {
                     @Override
                     public void onDateSet(android.widget.DatePicker datePicker, int year, int month, int day) {
                         String setDate = day + "/" + (month+1) + "/" + year;
-                        mDate.setText(setDate);
+                        mdate.setText(setDate);
                     }
                 },year,month,day);
                 dialog.setCancelable(false);
+
                 dialog.show();
             }
         });
+
         btn = view.findViewById(R.id.book);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 date = mDate.getText().toString();
+                 date = mdate.getText().toString();
                  time = spinner.getSelectedItem().toString();
 
                 UserInfo.dateStr = date;
                 UserInfo.timeStr = time;
+                appointment = date + " " + time;
+                String id = appointbase.push().getKey();
+                appointbase.child("steve").child("appointments").child("appointment"+id).setValue(appointment);
                 new AsyncMailer(getActivity()).execute(UserInfo.emailStr,date+" at "+time);
+
 
 //                final View dialogView = getLayoutInflater().inflate(R.layout.email_input_temp,null);
 //                AlertDialog.Builder input = new AlertDialog.Builder(getContext())
@@ -68,7 +90,6 @@ public class Fragment3 extends Fragment {
 //                    public void onClick(DialogInterface dialogInterface, int i) {
 //                        EditText em = dialogView.findViewById(R.id.email);
 //                        String email = em.getText().toString();
-//                        new AsyncMailer(getActivity()).execute(email,date+" at "+time);
 //                    }
 //                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 //                    @Override
@@ -83,4 +104,6 @@ public class Fragment3 extends Fragment {
 
         return view;
     }
+
+
 }

@@ -20,18 +20,29 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
-    EditText user,pass;
+    EditText user,pass,name,mobile,gender,dateofbirth;
     Button register;
     ConstraintLayout reg;
     private FirebaseAuth mAuth;
+    DatabaseReference databaseUser;
+    String useremail,usrname,Mobile,Gender,DOB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        databaseUser = FirebaseDatabase.getInstance().getReference("users");
+
+        name = findViewById(R.id.name);
+        mobile=findViewById(R.id.mobileNo);
+        gender = findViewById(R.id.Gender);
+        dateofbirth = findViewById(R.id.date2);
         user= findViewById(R.id.email);
         pass = findViewById(R.id.password);
         register = findViewById(R.id.register);
@@ -48,28 +59,39 @@ public class RegisterActivity extends AppCompatActivity {
         if(!isConnected(RegisterActivity.this))
             internetAlert(RegisterActivity.this).show();
         else{
-            String username = user.getText().toString();
-            String password = pass.getText().toString();
-            if(username.matches("") || password.matches(""))
+             useremail = user.getText().toString();
+             String password = pass.getText().toString();
+             usrname = name.getText().toString();
+             Mobile = mobile.getText().toString();
+            Gender = gender.getText().toString();
+             DOB = dateofbirth.getText().toString();
+            if(useremail.matches("") || password.matches("") || usrname.matches("") || Mobile.matches("") || Gender.matches("") || DOB.matches(""))
             {
                 alertBox(RegisterActivity.this,"Empty !","\nPlease enter your credentials").show();
                 return;
             }
+
             final ProgressDialog progressDialog = new ProgressDialog(RegisterActivity.this);
             progressDialog.setIndeterminate(true);
             progressDialog.setMessage("Authenticating...");
             progressDialog.show();
             progressDialog.getWindow().setLayout(900,400);
-            mAuth.createUserWithEmailAndPassword(username, password)
+          //  new AsyncLogin(this, progressDialog).execute(username, password);
+            mAuth.createUserWithEmailAndPassword(useremail, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete( Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 progressDialog.dismiss();
+//                                String id = databaseUser.push().getKey();
+//                                User user = new User(useremail,usrname,Mobile,Gender,DOB);
+//                                databaseUser.child(id).setValue(user);
+                                addUser();
+                                FirebaseUser Usr = mAuth.getCurrentUser();
                                 // Sign in success, update UI with the signed-in user's information
-                                String user = mAuth.getCurrentUser().getEmail();
+                                String mail = Usr.getEmail();
                                 Intent i = new Intent(RegisterActivity.this,UserInfo.class);
-                                i.putExtra("emailStr",user);
+                                i.putExtra("emailStr",mail);
                                 startActivity(i);
                                 (RegisterActivity.this).overridePendingTransition(R.anim.slide_in_right,android.R.anim.slide_out_right);
                             } else {
@@ -84,6 +106,13 @@ public class RegisterActivity extends AppCompatActivity {
                     });
         }
     }
+
+    public void addUser(){
+        String id = databaseUser.push().getKey();
+        User user = new User(useremail,usrname,Mobile,Gender,DOB);
+        databaseUser.child(usrname).setValue(user);
+    }
+
     public boolean isConnected(Context context) {
 
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

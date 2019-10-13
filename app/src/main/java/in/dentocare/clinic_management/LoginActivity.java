@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText usernameField,passwordField;
     ConstraintLayout login;
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,8 +97,9 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete( Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 progressDialog.dismiss();
+                                FirebaseUser User = mAuth.getCurrentUser();
                                 // Sign in success, update UI with the signed-in user's information
-                                String user = mAuth.getCurrentUser().getEmail();
+                                String user = User.getEmail();
                                 Intent i = new Intent(LoginActivity.this,UserInfo.class);
                                 i.putExtra("emailStr",user);
                                 startActivity(i);
@@ -109,9 +111,10 @@ public class LoginActivity extends AppCompatActivity {
                                 progressDialog.dismiss();
                             }
 
-                            // ...
+
                         }
                     });
+
             //new AsyncLogin(this, progressDialog).execute(username, password);
         }
     }
