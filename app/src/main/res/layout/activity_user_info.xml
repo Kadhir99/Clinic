@@ -8,7 +8,7 @@
     tools:context=".UserInfo">
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/RegName"
         android:layout_width="213dp"
         android:layout_height="41dp"
         android:layout_marginStart="8dp"
@@ -34,7 +34,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name"
+        app:layout_constraintTop_toBottomOf="@+id/RegName"
         app:layout_constraintVertical_bias="1.0"></androidx.viewpager.widget.ViewPager>
 
     <com.google.android.material.appbar.AppBarLayout
@@ -51,15 +51,14 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/Tab">
+            android:layout_height="?attr/actionBarSize">
 
         </androidx.appcompat.widget.Toolbar>
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/Tab">
+            app:tabIndicatorHeight="4dp">
 
         </com.google.android.material.tabs.TabLayout>
 

@@ -1,7 +1,5 @@
 package in.dentocare.clinic_management;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -29,9 +27,6 @@ import android.widget.TextView;
 
 public class Doctor extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    TextView nam;
-    EditText email,time;
-    Button b;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

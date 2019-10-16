@@ -75,9 +75,9 @@ public class AsyncLogin extends AsyncTask<String,Void,String>{
 //                    @Override
 //                    public void onComplete( Task<AuthResult> task) {
 //                        if (task.isSuccessful()) {
-//                            FirebaseUser User = mAuth.getCurrentUser();
+//                            FirebaseUser UserData = mAuth.getCurrentUser();
 //                            // Sign in success, update UI with the signed-in user's information
-//                            usr=User.getEmail();
+//                            usr=UserData.getEmail();
 //
 //                        } else {
 //                            // If sign in fails, display a message to the user.

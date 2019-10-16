@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,13 +26,16 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
+
 public class RegisterActivity extends AppCompatActivity {
-    EditText user,pass,name,mobile,gender,dateofbirth;
+    EditText user,pass,name,mobile,dateOfBirth;
+    RadioGroup gender;
     Button register;
     ConstraintLayout reg;
     private FirebaseAuth mAuth;
     DatabaseReference databaseUser;
-    String useremail,usrname,Mobile,Gender,DOB;
+    String sEmail, sName, sMobile, sGender, sDOB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +44,30 @@ public class RegisterActivity extends AppCompatActivity {
 
         databaseUser = FirebaseDatabase.getInstance().getReference("users");
 
-        name = findViewById(R.id.name);
-        mobile=findViewById(R.id.mobileNo);
-        gender = findViewById(R.id.Gender);
-        dateofbirth = findViewById(R.id.date2);
-        user= findViewById(R.id.email);
-        pass = findViewById(R.id.password);
+        name = findViewById(R.id.RegName);
+        mobile=findViewById(R.id.RegMobileNo);
+        gender = findViewById(R.id.RegGender);
+        dateOfBirth = findViewById(R.id.RegDate);
+        dateOfBirth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar c = Calendar.getInstance();
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dialog = new DatePickerDialog(RegisterActivity.this,new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(android.widget.DatePicker datePicker, int year, int month, int day) {
+                        String setDate = day + "/" + (month+1) + "/" + year;
+                        dateOfBirth.setText(setDate);
+                    }
+                },year,month,day);
+                dialog.setCancelable(false);
+                dialog.show();
+            }
+        });
+        user= findViewById(R.id.RegEmail);
+        pass = findViewById(R.id.RegPassword);
         register = findViewById(R.id.register);
         reg=findViewById(R.id.registerForm);
         mAuth = FirebaseAuth.getInstance();
@@ -59,13 +82,13 @@ public class RegisterActivity extends AppCompatActivity {
         if(!isConnected(RegisterActivity.this))
             internetAlert(RegisterActivity.this).show();
         else{
-             useremail = user.getText().toString();
+             sEmail = user.getText().toString();
              String password = pass.getText().toString();
-             usrname = name.getText().toString();
-             Mobile = mobile.getText().toString();
-            Gender = gender.getText().toString();
-             DOB = dateofbirth.getText().toString();
-            if(useremail.matches("") || password.matches("") || usrname.matches("") || Mobile.matches("") || Gender.matches("") || DOB.matches(""))
+             sName = name.getText().toString();
+             sMobile = mobile.getText().toString();
+             sGender = gender.getCheckedRadioButtonId()==R.id.male?"Male":"Female";
+             sDOB = dateOfBirth.getText().toString();
+            if(sEmail.matches("") || password.matches("") || sName.matches("") || sMobile.matches("") || sGender.matches("") || sDOB.matches(""))
             {
                 alertBox(RegisterActivity.this,"Empty !","\nPlease enter your credentials").show();
                 return;
@@ -73,19 +96,19 @@ public class RegisterActivity extends AppCompatActivity {
 
             final ProgressDialog progressDialog = new ProgressDialog(RegisterActivity.this);
             progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Authenticating...");
+            progressDialog.setMessage("Registering...");
             progressDialog.show();
             progressDialog.getWindow().setLayout(900,400);
           //  new AsyncLogin(this, progressDialog).execute(username, password);
-            mAuth.createUserWithEmailAndPassword(useremail, password)
+            mAuth.createUserWithEmailAndPassword(sEmail, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete( Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 progressDialog.dismiss();
 //                                String id = databaseUser.push().getKey();
-//                                User user = new User(useremail,usrname,Mobile,Gender,DOB);
-//                                databaseUser.child(id).setValue(user);
+//                                UserData user = new UserData(sEmail, sName, sMobile, sGender, sDOB);
+//                                databaseUser.child(UserInfo.emailStr.replace('.',',')).setValue(user);
                                 addUser();
                                 FirebaseUser Usr = mAuth.getCurrentUser();
                                 // Sign in success, update UI with the signed-in user's information
@@ -109,8 +132,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void addUser(){
         String id = databaseUser.push().getKey();
-        User user = new User(useremail,usrname,Mobile,Gender,DOB);
-        databaseUser.child(usrname).setValue(user);
+        UserData userData = new UserData(sEmail, sName, sMobile, sGender, sDOB);
+        databaseUser.child(sEmail.replace('.',',')).setValue(userData);
     }
 
     public boolean isConnected(Context context) {

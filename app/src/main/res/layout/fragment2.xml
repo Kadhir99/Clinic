@@ -13,7 +13,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/userinfo"
+        app:layout_constraintStart_toEndOf="@+id/RegName"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/ic_user" />
 
@@ -32,10 +32,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/mobileNo" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/gender"
         android:layout_width="133dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -52,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/dob"
         android:layout_width="133dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -61,15 +61,15 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:gravity="left"
-        android:text="Age"
+        android:text="DOB"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.118"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/gender" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/mobileNo"
         android:layout_width="133dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -83,10 +83,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.119"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userinfo" />
+        app:layout_constraintTop_toBottomOf="@+id/FragName" />
 
     <TextView
-        android:id="@+id/userinfo"
+        android:id="@+id/FragName"
         android:layout_width="159dp"
         android:layout_height="51dp"
         android:layout_marginStart="20dp"
