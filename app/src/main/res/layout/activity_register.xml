@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,23 +12,22 @@
 
     <EditText
         android:id="@+id/date2"
-        android:layout_width="295dp"
-        android:layout_height="58dp"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:background="@drawable/inputfield"
         android:ems="10"
         android:focusableInTouchMode="false"
-        android:paddingLeft="40dp"
+        android:gravity="center"
         android:hint="Date of birth"
-        android:inputType="phone"
+        android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Gender" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
     <EditText
         android:id="@+id/mobileNo"
@@ -37,7 +37,7 @@
         android:layout_alignRight="@+id/email"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:background="@drawable/inputfield"
@@ -50,27 +50,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
-    <EditText
-        android:id="@+id/Gender"
-        android:layout_width="300dp"
-        android:layout_height="55dp"
-        android:layout_below="@+id/email"
-        android:layout_alignRight="@+id/email"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@drawable/inputfield"
-        android:ems="10"
-        android:hint="Gender"
-        android:inputType="text"
-        android:paddingLeft="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mobileNo" />
-
     <Button
         android:id="@+id/register"
         android:layout_width="220dp"
@@ -80,8 +59,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="52dp"
-        android:background="@drawable/ripple"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/round_button"
         android:onClick="register"
         android:text="REGISTER"
         android:textColor="#ffff"
@@ -99,7 +78,7 @@
         android:layout_alignRight="@+id/email"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:background="@drawable/inputfield"
@@ -120,7 +99,7 @@
         android:layout_alignRight="@+id/email"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:background="@drawable/inputfield"
@@ -164,6 +143,20 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mobileNo"/>
+        app:layout_constraintTop_toBottomOf="@+id/mobileNo">
+
+        <RadioButton
+            android:id="@+id/male"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Male" />
+
+        <RadioButton
+            android:id="@+id/female"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Female" />
+
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
