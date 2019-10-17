@@ -10,7 +10,6 @@ import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,8 +34,9 @@ public class UserInfo extends AppCompatActivity {
     private ViewPager mViewPager;
     static String emailStr, dateStr, timeStr;
     DatabaseReference appointBase;
-//    static UserData userData;
-    static String[] usrData = new String[5];
+    SectionsPageAdapter adapter;
+    //    static UserData userData;
+    String[] usrData = new String[5];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,12 +48,12 @@ public class UserInfo extends AppCompatActivity {
         emailStr = getIntent().getStringExtra("emailStr");
 
         mViewPager =  findViewById(R.id.container);
-//        setupViewPager(mViewPager);
-        final ProgressDialog progressDialog = new ProgressDialog(UserInfo.this);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Fetching...");
-        progressDialog.show();
-        progressDialog.getWindow().setLayout(900,400);
+        setupViewPager(mViewPager);
+//        final ProgressDialog progressDialog = new ProgressDialog(UserInfo.this);
+//        progressDialog.setIndeterminate(true);
+//        progressDialog.setMessage("Fetching...");
+//        progressDialog.show();
+//        progressDialog.getWindow().setLayout(900,400);
         TabLayout tabLayout =  findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
         appointBase = FirebaseDatabase.getInstance().getReference("users/"+emailStr.replace(".",","));
@@ -66,11 +66,15 @@ public class UserInfo extends AppCompatActivity {
                 for(DataSnapshot data : dataSnapshot.getChildren())
                 {
 //                    b.append(data.getValue().toString()+" -- ");
-                    usrData[i]=data.getValue().toString();
-                    i++;
+                    if(!data.getKey().matches("appointments")) {
+                        usrData[i] = data.getValue().toString();
+                        i++;
+                    }
                 }
-                progressDialog.dismiss();
-                setupViewPager(mViewPager);
+//                progressDialog.dismiss();
+                Fragment2 f =(Fragment2) adapter.getItem(1);
+                f.updateValues(usrData);
+//                setupViewPager(mViewPager);
 //                Toast.makeText(UserInfo.this,b+" // "+dataSnapshot.getChildrenCount(),Toast.LENGTH_LONG).show();
 
             }
@@ -83,11 +87,12 @@ public class UserInfo extends AppCompatActivity {
     }
 
     private void setupViewPager(ViewPager viewPager){
-        SectionsPageAdapter adapter = new SectionsPageAdapter(this.getSupportFragmentManager());
+        adapter = new SectionsPageAdapter(this.getSupportFragmentManager());
         adapter.addfragment(new Fragment1(), "History");
         adapter.addfragment(new Fragment2(), "Info");
         adapter.addfragment(new Fragment3(), "Book");
         viewPager.setAdapter(adapter);
+
     }
 
     public AlertDialog.Builder alertBox(){
