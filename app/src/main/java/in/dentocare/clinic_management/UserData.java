@@ -1,16 +1,16 @@
 package in.dentocare.clinic_management;
 
 public class UserData {
-    public String userEmail, userName, mobileNo,Gender,DOB;
+    public String userEmail, userName, mobileNo,gender,dob;
 
     public UserData(){}
 
-    public UserData(String email, String userName, String mobileNo, String gender, String DOB) {
+    public UserData(String email, String userName, String mobileNo, String gen, String DOB) {
         this.userEmail = email;
         this.userName = userName;
         this.mobileNo = mobileNo;
-        this.Gender = gender;
-        this.DOB = DOB;
+        this.gender = gen;
+        this.dob = DOB;
     }
 
     public String getuserEmail() {
@@ -25,11 +25,11 @@ public class UserData {
         return mobileNo;
     }
 
-    public String getGender() {
-        return Gender;
+    public String getgender() {
+        return gender;
     }
 
-    public String getDOB() {
-        return DOB;
+    public String getdob() {
+        return dob;
     }
 }

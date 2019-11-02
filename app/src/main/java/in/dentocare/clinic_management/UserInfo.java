@@ -88,7 +88,7 @@ public class UserInfo extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager){
         adapter = new SectionsPageAdapter(this.getSupportFragmentManager());
-        adapter.addfragment(new Fragment1(), "History");
+        adapter.addfragment(new Fragment1(), "Home");
         adapter.addfragment(new Fragment2(), "Info");
         adapter.addfragment(new Fragment3(), "Book");
         viewPager.setAdapter(adapter);

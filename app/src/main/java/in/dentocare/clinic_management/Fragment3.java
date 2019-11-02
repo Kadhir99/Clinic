@@ -65,7 +65,7 @@ public class Fragment3 extends Fragment {
 
                 UserInfo.dateStr = date;
                 UserInfo.timeStr = time;
-                appointment = date + " " + time;
+                appointment = "Date: "+date + "   "+"Time: "+ time;
                 String id = appointBase.push().getKey();
                 appointBase.child(UserInfo.emailStr.replace('.',',')).child("appointments").child("appointment"+id).setValue(appointment);
                 new AsyncMailer(getActivity()).execute(UserInfo.emailStr,date+" at "+time);

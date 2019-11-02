@@ -16,6 +16,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:ems="10"
+        android:background="@drawable/inputfield"
         android:focusableInTouchMode="false"
         android:gravity="left|center_vertical"
         android:hint="   Pick a date"
@@ -26,7 +27,7 @@
 
     <Spinner
         android:id="@+id/spinner"
-        style="@style/Widget.AppCompat.Spinner.Underlined"
+        style="@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar"
         android:layout_width="250dp"
         android:layout_height="44dp"
         android:layout_marginStart="8dp"
@@ -35,6 +36,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:gravity="center"
+        android:background="@drawable/inputfield"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
