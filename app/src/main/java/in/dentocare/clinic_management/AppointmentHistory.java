@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +23,7 @@ public class AppointmentHistory extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<String> list;
     MyAdapter adapter;
+    static String ap = new String();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +44,7 @@ public class AppointmentHistory extends AppCompatActivity {
                 for(DataSnapshot data: dataSnapshot.getChildren()){
                     String a = data.getValue(String.class);
                     list.add(a);
+                    ap += a;
                 }
                 adapter = new MyAdapter(AppointmentHistory.this,list);
                 recyclerView.setAdapter(adapter);

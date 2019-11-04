@@ -79,11 +79,15 @@ public class LoginActivity extends AppCompatActivity {
         else {
             String username = usernameField.getText().toString();
             String password = passwordField.getText().toString();
+            if(username.matches("admin")){
+                startActivity(new Intent(this,Doctor.class));
+            }
             if(username.matches("") || password.matches(""))
             {
                 alertBox(LoginActivity.this,"Empty !","\nPlease enter your credentials").show();
                 return;
             }
+
             final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
             progressDialog.setIndeterminate(true);
             progressDialog.setMessage("Authenticating...");

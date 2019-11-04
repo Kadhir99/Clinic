@@ -133,6 +133,7 @@ public class UserInfo extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_5:
+                Toast.makeText(this,"hello", Toast.LENGTH_LONG).show();
 
                 addNotification();
 
@@ -143,6 +144,9 @@ public class UserInfo extends AppCompatActivity {
                 return true;
             case R.id.action_30:
                 scheduleNotification(getNotification("30 second delay"), 30000);
+                return true;
+            case R.id.connect:
+               // startActivity(new Intent(this,Connectivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

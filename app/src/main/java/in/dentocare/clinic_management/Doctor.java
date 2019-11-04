@@ -24,6 +24,7 @@ import android.view.Menu;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Doctor extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -76,7 +77,7 @@ public class Doctor extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-
+            Toast.makeText(this,"hello", Toast.LENGTH_LONG).show();
             return true;
         }
 

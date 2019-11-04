@@ -14,8 +14,8 @@
         android:title="30 seconds"
         app:showAsAction="never" />
 
-    <item android:id="@+id/mail"
-        android:title="Send mail"
+    <item android:id="@+id/connect"
+        android:title="Connectivity"
         app:showAsAction="never" />
 
 </menu>
