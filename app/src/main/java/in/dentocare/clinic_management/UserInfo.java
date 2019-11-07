@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
@@ -27,15 +28,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 
 public class UserInfo extends AppCompatActivity {
-//    private static final String TAG = "UserInfo";
 
     private ViewPager mViewPager;
     static String emailStr, dateStr, timeStr;
     DatabaseReference appointBase;
     SectionsPageAdapter adapter;
-    //    static UserData userData;
+    String lDate,lTime;
+    static String ap = new String();
     String[] usrData = new String[5];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +87,82 @@ public class UserInfo extends AppCompatActivity {
                 Toast.makeText(UserInfo.this, "Failed to read value."+error.toException(), Toast.LENGTH_LONG).show();
             }
         });
+
+        getAppointments(FirebaseDatabase.getInstance().getReference("Appointments"));
     }
+    public void getAppointments(DatabaseReference reference){
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot data: dataSnapshot.getChildren())
+                {
+                    DatabaseReference year = data.getRef();
+                    year.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot years) {
+                            for(DataSnapshot monthN : years.getChildren()) {
+                                DatabaseReference month = monthN.getRef();
+                                month.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot months) {
+                                        for(DataSnapshot dayN : months.getChildren()) {
+                                            DatabaseReference day = dayN.getRef();
+                                            day.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot days) {
+                                                    for(DataSnapshot timeN : days.getChildren())
+                                                    {
+                                                        final DatabaseReference time = timeN.getRef();
+//                                                        Toast.makeText(UserInfo.this, time.toString(), Toast.LENGTH_LONG).show();
+                                                        time.addValueEventListener(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(@NonNull DataSnapshot times) {
+                                                                lTime = times.getKey();
+                                                                char [] d = times.getRef().toString().toCharArray();
+                                                                lDate = ""+d[60]+d[61]+d[62]+d[63]+d[64]+d[65]+d[66]+d[67]+d[68]+d[69];
+                                                                ap+=lDate+lTime;
+//                                                                  Toast.makeText(UserInfo.this, lDate, Toast.LENGTH_LONG).show();
+
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                                Toast.makeText(UserInfo.this, "Failed to read value."+databaseError.toException(), Toast.LENGTH_LONG).show();
+                                                            }
+                                                        });
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                    Toast.makeText(UserInfo.this, "Failed to read value."+databaseError.toException(), Toast.LENGTH_LONG).show();
+                                                }
+                                            });
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                        Toast.makeText(UserInfo.this, "Failed to read value."+databaseError.toException(), Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Toast.makeText(UserInfo.this, "Failed to read value."+databaseError.toException(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(UserInfo.this, "Failed to read value."+databaseError.toException(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 
     private void setupViewPager(ViewPager viewPager){
         adapter = new SectionsPageAdapter(this.getSupportFragmentManager());

@@ -15,15 +15,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AppointmentHistory extends AppCompatActivity {
 
-    DatabaseReference reference;
+    Boolean f;
     RecyclerView recyclerView;
-    ArrayList<String> list;
-    MyAdapter adapter;
-    static String ap = new String();
+    ArrayList<String> dateList,timeList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,25 +28,84 @@ public class AppointmentHistory extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.Recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        list = new ArrayList<>();
-        reference = FirebaseDatabase.getInstance().getReference("users").child(UserInfo.emailStr.replace(".", ",")).child("appointments");
-
-        PopulateFeed();
-
+        dateList = new ArrayList<>();
+        timeList = new ArrayList<>();
+        f = getIntent().getBooleanExtra("flag",false);
+        if(f==false)
+            getAppointments(FirebaseDatabase.getInstance().getReference("users/"+UserInfo.emailStr.replace(".",",")).child("appointments"));
+        else
+            getAppointments(FirebaseDatabase.getInstance().getReference("Appointments"));
     }
-    public void PopulateFeed(){
+    public void getAppointments(DatabaseReference reference){
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot data: dataSnapshot.getChildren()){
-                    String a = data.getValue(String.class);
-                    list.add(a);
-                    ap += a;
-                }
-                adapter = new MyAdapter(AppointmentHistory.this,list);
-                recyclerView.setAdapter(adapter);
-            }
+                for(DataSnapshot data: dataSnapshot.getChildren())
+                {
+                    DatabaseReference year = data.getRef();
+                    year.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot years) {
+                            for(DataSnapshot monthN : years.getChildren()) {
+                                DatabaseReference month = monthN.getRef();
+                                month.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot months) {
+                                        for(DataSnapshot dayN : months.getChildren()) {
+                                            DatabaseReference day = dayN.getRef();
+                                            day.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot days) {
+                                                    for(DataSnapshot timeN : days.getChildren())
+                                                    {
+                                                        final DatabaseReference time = timeN.getRef();
+                                                        time.addValueEventListener(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(@NonNull DataSnapshot times) {
+                                                                String lTime = times.getKey();
+                                                                char [] d = times.getRef().toString().toCharArray();
+                                                                String lDate;
+                                                                if(!f)
+                                                                    lDate = ""+d[95]+d[96]+d[97]+d[98]+d[99]+d[100]+d[101]+d[102]+d[103]+d[104];
+                                                                else
+                                                                    lDate = ""+d[60]+d[61]+d[62]+d[63]+d[64]+d[65]+d[66]+d[67]+d[68]+d[69];
 
+                                                                dateList.add(lDate);
+                                                                timeList.add(lTime);
+                                                                recyclerView.setAdapter(new MyAdapter(AppointmentHistory.this,dateList,timeList));
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                                Toast.makeText(AppointmentHistory.this, "Failed to read value."+databaseError.toException(), Toast.LENGTH_LONG).show();
+                                                            }
+                                                        });
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                    Toast.makeText(AppointmentHistory.this, "Failed to read value."+databaseError.toException(), Toast.LENGTH_LONG).show();
+                                                }
+                                            });
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                        Toast.makeText(AppointmentHistory.this, "Failed to read value."+databaseError.toException(), Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Toast.makeText(AppointmentHistory.this, "Failed to read value."+databaseError.toException(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(AppointmentHistory.this, "Failed to read value."+databaseError.toException(), Toast.LENGTH_LONG).show();
@@ -57,8 +113,4 @@ public class AppointmentHistory extends AppCompatActivity {
         });
     }
 
-
-    private interface FirebaseCallback{
-        void OnCallback(List<AppointData> list);
-    }
 }

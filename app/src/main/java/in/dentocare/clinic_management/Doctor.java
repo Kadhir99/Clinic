@@ -1,5 +1,6 @@
 package in.dentocare.clinic_management;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -100,6 +101,9 @@ public class Doctor extends AppCompatActivity
             t.add(R.id.doctor_container,new Fragment2(),"frag2");
             t.commit();
         } else if (id == R.id.nav_slideshow) {
+            Intent intent = new Intent(this, AppointmentHistory.class);
+            intent.putExtra("flag",true);
+            startActivity(intent);
 
         } else if (id == R.id.nav_tools) {
 

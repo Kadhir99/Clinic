@@ -13,11 +13,16 @@ import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     Context context;
-    ArrayList<String> appointData;
+    ArrayList<String> appointDate,appointTime;
 
-    public MyAdapter(Context c, ArrayList<String> p){
+    public MyAdapter(){
+        super();
+    }
+
+    public MyAdapter(Context c, ArrayList<String> p, ArrayList<String> q){
         context = c;
-        appointData = p;
+        appointDate = p;
+        appointTime = q;
     }
 
     @NonNull
@@ -28,20 +33,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-            holder.name.setText(appointData.get(position));
+            holder.date.setText(appointDate.get(position));
+            holder.time.setText(appointTime.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return appointData.size();
+        return appointDate.size();
     }
 
 
     class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView name;
+        TextView date,time;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.value);
+            date = itemView.findViewById(R.id.Adate);
+            time = itemView.findViewById(R.id.Atime);
         }
     }
 }

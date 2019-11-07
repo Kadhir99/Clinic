@@ -79,8 +79,13 @@ public class LoginActivity extends AppCompatActivity {
         else {
             String username = usernameField.getText().toString();
             String password = passwordField.getText().toString();
-            if(username.matches("admin")){
-                startActivity(new Intent(this,Doctor.class));
+            if(username.matches("admin") && password.matches("root")){
+//                startActivity(new Intent(this,Doctor.class));
+
+                Intent intent = new Intent(this, AppointmentHistory.class);
+                intent.putExtra("flag",true);
+                startActivity(intent);
+                return;
             }
             if(username.matches("") || password.matches(""))
             {

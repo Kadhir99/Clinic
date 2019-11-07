@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-//import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,7 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
-import static in.dentocare.clinic_management.AppointmentHistory.ap;
+import static in.dentocare.clinic_management.UserInfo.ap;
 
 public class Fragment3 extends Fragment {
 
@@ -32,7 +31,7 @@ public class Fragment3 extends Fragment {
     String appointment;
     boolean c = false;
     DatabaseReference appointBase = FirebaseDatabase.getInstance().getReference("users");
-    DatabaseReference allAppoint = FirebaseDatabase.getInstance().getReference("Appointments");
+    DatabaseReference allAppoint = FirebaseDatabase.getInstance().getReference();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,7 +55,8 @@ public class Fragment3 extends Fragment {
                         month++;
                         String d = (day<10)?"0"+day:""+day;
                         String m = (month<10)?"0"+month:""+month;
-                        String setDate = d + "/" + m + "/" + year;
+                        //String setDate = d + "/" + m + "/" + year;
+                        String setDate = year + "/" + m + "/" + d;
                         mDate.setText(setDate);
                         setButtons(setDate);
                     }
@@ -78,7 +78,8 @@ public class Fragment3 extends Fragment {
                      UserInfo.timeStr = time;
                      appointment = "Date: " + date + "   " + "Time: " + time;
                      String id = appointBase.push().getKey();
-                     appointBase.child(UserInfo.emailStr.replace('.', ',')).child("appointments").child("appointment" + id).setValue(appointment);
+                     allAppoint.child("Appointments").child(date).child(time).setValue(UserInfo.emailStr.replace('.', ','));
+                     appointBase.child(UserInfo.emailStr.replace('.', ',')).child("appointments").child(date).child(time).setValue(id);
                      new AsyncMailer(getActivity()).execute(UserInfo.emailStr, date + " at " + time);
                  }
                  else{
@@ -185,9 +186,8 @@ public class Fragment3 extends Fragment {
         {
             if(a[i]==d[0] && a[i+1]==d[1] && a[i+2]==d[2] && a[i+3]==d[3] && a[i+4]==d[4] && a[i+5]==d[5] && a[i+6]==d[6] && a[i+7]==d[7] && a[i+8]==d[8] && a[i+9]==d[9])
             {
-                t1 = a[i + 19] - '0';
-                t2 = a[i + 21] - '0';
-              //  Toast.makeText(getContext(),t1+" - "+t2,Toast.LENGTH_LONG).show();
+                t1 = a[i + 10] - '0';
+                t2 = a[i + 12] - '0';
             }
             if(t1!=0&&t2!=9)
             {
