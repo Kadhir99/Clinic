@@ -118,7 +118,7 @@
         android:layout_height="47dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="150dp"
+        android:layout_marginBottom="104dp"
         android:background="@drawable/ripple"
         android:text="Book now"
         android:textColor="#FFFFFF"

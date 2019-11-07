@@ -10,7 +10,7 @@
         android:id="@+id/button"
         android:layout_width="0dp"
         android:layout_height="53dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="108dp"
         android:background="@color/colorAccent"
         android:text="View Appointments"
         android:textColor="@color/cardview_light_background"
@@ -18,20 +18,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="16dp"
-        android:background="@color/colorAccent"
-        android:text="View Prescriptions"
-        android:textColor="@color/cardview_light_background"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.gms.maps.MapView
@@ -39,11 +26,9 @@
         android:layout_width="363dp"
         android:layout_height="224dp"
         android:layout_marginTop="192dp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
