@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBf3tEmdR18S-2v0E1i1x0oqcXJ9imntT4"/>
+            android:value="AIzaSyCA50yvVGYrxOqlad0H1qcUExirr5VuGoc"/>
         <activity android:name=".AppointmentHistory"></activity>
         <activity android:name=".RegisterActivity" />
         <activity
@@ -36,7 +36,7 @@
     </application>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

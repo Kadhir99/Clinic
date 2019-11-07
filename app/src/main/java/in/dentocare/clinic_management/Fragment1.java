@@ -82,7 +82,7 @@ public class Fragment1 extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap map) {
-        map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        map.addMarker(new MarkerOptions().position(new LatLng(11.938386, 79.830230)).title("Marker"));
     }
 
     @Override
