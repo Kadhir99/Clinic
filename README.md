@@ -5,7 +5,8 @@ Android app for doctor appointment and record management
 <b>Home screen</b>
 
      The dentist information and the clinic location is pinned in the map view.
-The patient can view his past appointments by clicking on the view appointments button.
+     The patient can view his past appointments by clicking on the 
+     view appointments button.
 <img src="img/home.jpg">
 
 
