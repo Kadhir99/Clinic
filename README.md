@@ -1,4 +1,4 @@
-# Clinic
+# Dentist appointment manager
 Android app for doctor appointment and record management
 
 
@@ -18,6 +18,6 @@ Android app for doctor appointment and record management
 <b>Booking screen</b>
 
       The patient can book their appointments in the respective date and time where the 
-green buttons indicate available slots, red indicates booked and the blue indicates what 
-they've selected.
+      green buttons indicate available slots, red indicates booked and the blue indicates what 
+      they've selected.
 <img src="img/book.jpg">
